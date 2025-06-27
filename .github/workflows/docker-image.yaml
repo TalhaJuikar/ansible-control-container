@@ -6,6 +6,8 @@ on:
       - main
     paths-ignore:
       - 'README.md'
+      - 'docker-compose.yaml'
+      - '.github/workflows/docker-image.yaml'
   workflow_dispatch:
 
 env:
