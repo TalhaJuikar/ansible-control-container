@@ -1,0 +1,29 @@
+---
+services:
+  ansible-control:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ghcr.io/talhajuikar/ansible-control-container:latest
+    container_name: ansible-control
+    volumes:
+      - ~/.ssh:/root/.ssh:ro
+      # Optional: Mount ansible playbooks and configs
+      # - ./playbooks:/workspace/playbooks
+      # Optional: Mount inventory files
+      # - ./inventory:/etc/ansible/inventory:ro
+      # Optional: Mount ansible.cfg
+      # - ./ansible.cfg:/etc/ansible/ansible.cfg:ro
+    environment:
+      - ANSIBLE_HOST_KEY_CHECKING=False
+      - ANSIBLE_CONFIG=/etc/ansible/ansible.cfg
+      - TZ=UTC
+    networks:
+      - ansible-net
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
+
+networks:
+  ansible-net:
+    driver: bridge
